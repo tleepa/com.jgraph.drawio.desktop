@@ -29,13 +29,13 @@ modules:
       env:
         XDG_CACHE_HOME: /run/build/drawio/flatpak-node/cache
     build-commands:
-      - HOME=$PWD yarn config --offline set yarn-offline-mirror $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror
-      - yarn --offline
-      - yarn --offline run sync
+      - npm config set cache $FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache --location=project
+      - npm ci --offline --ignore-scripts
+      - npm run sync --offline
       - cp -rL flatpak-node/cache/node-gyp flatpak-node/cache/node-gyp-resolved
       - rm -rf flatpak-node/cache/node-gyp
       - mv flatpak-node/cache/node-gyp-resolved flatpak-node/cache/node-gyp
-      - . flatpak-node/electron-builder-arch-args.sh; yarn --offline run release-linux --linux dir
+      - . flatpak-node/electron-builder-arch-args.sh; npm run release-linux --offline -- --linux dir
       - cp -a dist/linux*unpacked $FLATPAK_DEST/main
       - install -D -m 644 build/icon.svg $FLATPAK_DEST/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
       - for size in 16 32 48 64 96 128 192 256 512; do install -d $FLATPAK_DEST/share/icons/hicolor/${size}x${size}/apps;
@@ -48,8 +48,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/jgraph/drawio-desktop.git
-        tag: v29.0.3
-        commit: 90cf2870b38800ac9019d1d3a7256008cfcaaaa4
+        tag: v29.5.2
+        commit: b9e63cd7a533409a8430b9ba254c6a390bde22f9
         x-checker-data:
           type: json
           url: https://api.github.com/repos/jgraph/drawio-desktop/releases/latest
