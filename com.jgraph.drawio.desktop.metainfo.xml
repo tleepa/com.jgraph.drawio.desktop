@@ -38,6 +38,7 @@
     </screenshot>
   </screenshots>
   <url type="homepage">https://about.draw.io</url>
+  <url type="vcs-browser">https://github.com/jgraph/drawio-desktop</url>
   <developer_name>JGraph</developer_name>
   <update_contact>support@draw.io</update_contact>
   <releases>
